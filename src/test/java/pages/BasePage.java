@@ -24,4 +24,25 @@ public class BasePage {
     public void loadAWebPage (String URL) {
         getDriver ().get (URL);
     }
+
+    public void writeOnElement (By locator, String text) {
+        getWebElement (locator).clear ();
+        getWebElement (locator).sendKeys (text);
+    }
+
+    public Boolean getDisplayState (By locator) {
+        try {
+            return getDriver ().findElement (locator).isDisplayed ();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public String getAttribute (By locator, String attribute) {
+        return getWebElement (locator).getAttribute (attribute);
+    }
+
+    public String getElementText (By locator) {
+        return getWebElement (locator).getText ();
+    }
 }
