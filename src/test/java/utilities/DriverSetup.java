@@ -6,14 +6,12 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 
 import java.time.Duration;
 
 public class DriverSetup {
-    private static String browserName = System.getProperty ("browser", "Chrome");
+    private static final String browserName = System.getProperty ("browser", "Chrome");
 
     private static final ThreadLocal<WebDriver> WEB_DRIVER_THREAD_LOCAL = new ThreadLocal<> ();
 
