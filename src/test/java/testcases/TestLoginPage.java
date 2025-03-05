@@ -1,7 +1,7 @@
 package testcases;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
@@ -12,7 +12,7 @@ public class TestLoginPage extends DriverSetup {
     LoginPage login = new LoginPage ();
     HomePage home = new HomePage ();
 
-    @BeforeClass
+    @BeforeMethod
     public void loadPage () {
         login.navigateToLoginPage ();
     }
@@ -26,22 +26,15 @@ public class TestLoginPage extends DriverSetup {
         Assert.assertFalse (login.getDisplayState (login.login_button));
     }
 
-    @Test
-    public void test_login_with_invalid_password () {
-        login.writeOnElement (login.login_email, "shobuj@yopmail.com");
-        login.writeOnElement (login.login_password, "shobuj122");
+    @Test(dataProvider = "invalidLoginData", dataProviderClass = utilities.DataSet.class)
+    public void test_login_with_invalid_credentials (String email, String password, String errorMessage,
+                                                     String emailValidationMessage, String passwordValidationMessage) {
+        login.writeOnElement (login.login_email, email);
+        login.writeOnElement (login.login_password, password);
         login.clickOnElement (login.login_button);
-        Assert.assertEquals (login.getElementText (login.error_message), "Your email or password is incorrect!");
-        Assert.assertTrue (login.getDisplayState (login.login_button));
-    }
-
-    @Test
-    public void test_login_with_invalid_email () {
-        login.writeOnElement (login.login_email, "shobujh");
-        login.writeOnElement (login.login_password, "shobuj123");
-        login.clickOnElement (login.login_button);
-        Assert.assertEquals (login.getAttribute (login.login_email, "validationMessage"),
-                "Please include an '@' in " + "the email address. 'shobujh' is missing an '@'.");
+        Assert.assertEquals (login.getErrorMessage (errorMessage), errorMessage);
+        Assert.assertEquals (login.getAttribute (login.login_email, "validationMessage"), emailValidationMessage);
+        Assert.assertEquals (login.getAttribute (login.login_password, "validationMessage"), passwordValidationMessage);
         Assert.assertTrue (login.getDisplayState (login.login_button));
     }
 }

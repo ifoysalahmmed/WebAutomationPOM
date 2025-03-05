@@ -16,4 +16,12 @@ public class LoginPage extends BasePage {
         homePage.loadHomePage ();
         homePage.clickOnElement (homePage.login_signup_button);
     }
+
+    public String getErrorMessage (String errorMessage) {
+        if (errorMessage.isEmpty ()) {
+            return "";
+        } else {
+            return getElementText (error_message);
+        }
+    }
 }
