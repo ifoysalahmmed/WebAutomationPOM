@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 
 public class HomePage extends BasePage {
 
-    public String homepageURL = "https://www.automationexercise.com";
+    public String homepageURL = "https://www.automationexercise.com/";
     public By login_signup_button = By.xpath ("//a[normalize-space()='Signup / Login']");
     public By products_list = By.xpath ("//a[@href='/products']");
     public By cart_list = By.xpath ("//a[normalize-space()='Cart']");
